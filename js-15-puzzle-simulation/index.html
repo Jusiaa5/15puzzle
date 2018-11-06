@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Viewer</title>
+    <style>
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('fonts/Montserrat/Montserrat-Medium.ttf');
+            src: url('fonts/Montserrat/Montserrat-MediumItalic.ttf');
+            src: url('fonts/Montserrat/Montserrat-Regular.ttf');
+            src: url('fonts/Montserrat/Montserrat-SemiBold.ttf');
+            src: url('fonts/Montserrat/Montserrat-SemiBoldItalic.ttf');
+
+        }
+        html * {
+            font-size: 40px !important;
+            color: #000 !important;
+            font-family: Montserrat !important;
+        }
+        
+        table {
+            text-align: center;
+            border-collapse: collapse;
+            display: table;
+            padding-top: 10vh;
+            padding-left: 55vh;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .wrapper {
+            text-align: center;
+        }
+
+        .button {
+            position: absolute;
+            top: 50%;
+            margin-top: 20px; 
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    Puzzle:
+    <input id="puzzle" style="margin-right:40px">
+
+    Directions:
+    <input id="directions">
+    
+    <div class="wrapper">
+        <button id="button" onclick="start()">
+            Start
+        </button>
+    </div>
+    
+    <div id="board" style="width: 100%">
+    </div>
+
+    <script src="index.js">
+
+    </script>
+</body>
+
+</html>
