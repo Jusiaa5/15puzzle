@@ -86,8 +86,13 @@ public class Board {
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy());
-        this.swapNumbers(this.getZeroRow() - 1, this.getZeroColumn());
-        return cache.addBoardIfNotCached(newBoard);
+        newBoard.swapNumbers(newBoard.getZeroRow() - 1, newBoard.getZeroColumn());
+        if (cache.addBoardIfNotCached(newBoard)) {
+            this.swapNumbers(this.getZeroRow() - 1, this.getZeroColumn());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean moveDown(BoardCache cache) {
@@ -96,8 +101,13 @@ public class Board {
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy());
-        this.swapNumbers(this.getZeroRow() + 1, this.getZeroColumn());
-        return cache.addBoardIfNotCached(newBoard);
+        newBoard.swapNumbers(newBoard.getZeroRow() + 1, newBoard.getZeroColumn());
+        if (cache.addBoardIfNotCached(newBoard)) {
+            this.swapNumbers(this.getZeroRow() + 1, this.getZeroColumn());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean moveRight(BoardCache cache) {
@@ -106,8 +116,14 @@ public class Board {
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy());
-        this.swapNumbers(this.getZeroRow(), this.getZeroColumn() + 1);
-        return cache.addBoardIfNotCached(newBoard);
+        newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() + 1);
+        if (cache.addBoardIfNotCached(newBoard)) {
+            this.swapNumbers(this.getZeroRow(), this.getZeroColumn() + 1);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public boolean moveLeft(BoardCache cache) {
@@ -116,8 +132,13 @@ public class Board {
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy());
-        this.swapNumbers(this.getZeroRow(), this.getZeroColumn() - 1);
-        return cache.addBoardIfNotCached(newBoard);
+        newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() - 1);
+        if (cache.addBoardIfNotCached(newBoard)) {
+            this.swapNumbers(this.getZeroRow(), this.getZeroColumn() - 1);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private int[][] clone2DArray(int[][] board) {
