@@ -15,6 +15,11 @@ public class Board {
         puzzleBoard = new int[length][length];
     }
 
+    public Board(int[][] puzzleBoard) {
+        this.size = (int) Math.pow(puzzleBoard.length, 2);
+        this.puzzleBoard = puzzleBoard;
+    }
+
     //populate board with random numbers for a given range; for development purposes
     public void fillBoardWithRandomNumbers() {
         Random random = new Random();
@@ -66,6 +71,10 @@ public class Board {
 
     public void setNumber(int row, int column, int number) {
         puzzleBoard[row][column] = number;
+    }
+
+    public int[][] getPuzzleBoard() {
+        return puzzleBoard;
     }
 
     public void swapNumbers(int elementRow, int elementColumn) {
