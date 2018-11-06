@@ -4,13 +4,14 @@ import model.Board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
-public class ArrayListCache implements BoardCache {
+public class HashSetCache implements BoardCache {
 
-    private final ArrayList<Board> cache;
+    private final HashSet<Board> cache;
 
-    public ArrayListCache() {
-        this.cache = new ArrayList<>();
+    public HashSetCache() {
+        this.cache = new HashSet<>();
     }
 
     public boolean addBoardIfNotCached(Board board) {

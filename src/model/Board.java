@@ -79,37 +79,37 @@ public class Board {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoard());
+        Board newBoard = new Board(puzzleBoard);
         this.swapNumbers(this.getZeroRow() - 1, this.getZeroColumn());
         return cache.addBoardIfNotCached(newBoard);
     }
 
     public boolean moveDown(BoardCache cache) {
-        if (this.getZeroRow() == 0) {
+        if (this.getZeroRow() == puzzleBoard.length-1) {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoard());
+        Board newBoard = new Board(puzzleBoard);
         this.swapNumbers(this.getZeroRow() + 1, this.getZeroColumn());
         return cache.addBoardIfNotCached(newBoard);
     }
 
     public boolean moveRight(BoardCache cache) {
-        if (this.getZeroRow() == 0) {
+        if (this.getZeroColumn() == puzzleBoard.length-1) {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoard());
+        Board newBoard = new Board(puzzleBoard);
         this.swapNumbers(this.getZeroRow(), this.getZeroColumn() + 1);
         return cache.addBoardIfNotCached(newBoard);
     }
 
     public boolean moveLeft(BoardCache cache) {
-        if (this.getZeroRow() == 0) {
+        if (this.getZeroColumn() == 0) {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoard());
+        Board newBoard = new Board(puzzleBoard);
         this.swapNumbers(this.getZeroRow(), this.getZeroColumn() - 1);
         return cache.addBoardIfNotCached(newBoard);
     }
