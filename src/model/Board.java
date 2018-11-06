@@ -64,6 +64,12 @@ public class Board {
         return puzzleBoard;
     }
 
+    // useful for creating new Boards - in order to copy the existing 2D array
+    // usage: new Board(oldBoard.getPuzzleBoardCopy())
+    public int[][] getPuzzleBoardCopy() {
+        return clone2DArray(puzzleBoard);
+    }
+
     private void swapNumbers(int elementRow, int elementColumn) {
         int zeroRow = getZeroRow();
         int zeroColumn = getZeroColumn();
@@ -79,27 +85,27 @@ public class Board {
             return false;
         }
 
-        Board newBoard = new Board(puzzleBoard);
+        Board newBoard = new Board(this.getPuzzleBoardCopy());
         this.swapNumbers(this.getZeroRow() - 1, this.getZeroColumn());
         return cache.addBoardIfNotCached(newBoard);
     }
 
     public boolean moveDown(BoardCache cache) {
-        if (this.getZeroRow() == puzzleBoard.length-1) {
+        if (this.getZeroRow() == puzzleBoard.length - 1) {
             return false;
         }
 
-        Board newBoard = new Board(puzzleBoard);
+        Board newBoard = new Board(this.getPuzzleBoardCopy());
         this.swapNumbers(this.getZeroRow() + 1, this.getZeroColumn());
         return cache.addBoardIfNotCached(newBoard);
     }
 
     public boolean moveRight(BoardCache cache) {
-        if (this.getZeroColumn() == puzzleBoard.length-1) {
+        if (this.getZeroColumn() == puzzleBoard.length - 1) {
             return false;
         }
 
-        Board newBoard = new Board(puzzleBoard);
+        Board newBoard = new Board(this.getPuzzleBoardCopy());
         this.swapNumbers(this.getZeroRow(), this.getZeroColumn() + 1);
         return cache.addBoardIfNotCached(newBoard);
     }
@@ -109,9 +115,16 @@ public class Board {
             return false;
         }
 
-        Board newBoard = new Board(puzzleBoard);
+        Board newBoard = new Board(this.getPuzzleBoardCopy());
         this.swapNumbers(this.getZeroRow(), this.getZeroColumn() - 1);
         return cache.addBoardIfNotCached(newBoard);
     }
 
+    private int[][] clone2DArray(int[][] board) {
+        int[][] newArray = new int[board.length][];
+        for (int i = 0; i < board.length; i++) {
+            newArray[i] = board[i].clone();
+        }
+        return newArray;
+    }
 }
