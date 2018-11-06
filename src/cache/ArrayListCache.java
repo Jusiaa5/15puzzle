@@ -1,17 +1,19 @@
+package cache;
+
 import model.Board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BoardCache {
+public class ArrayListCache implements BoardCache {
 
-    private final static ArrayList<Board> cache;
+    private final ArrayList<Board> cache;
 
-    static {
-        cache = new ArrayList<>();
+    public ArrayListCache() {
+        this.cache = new ArrayList<>();
     }
 
-    static boolean addBoardIfNotCached(Board board) {
+    public boolean addBoardIfNotCached(Board board) {
         if (isAlreadyCached(board)) {
             return false;
         } else {
@@ -20,11 +22,11 @@ public class BoardCache {
         }
     }
 
-    private static boolean isAlreadyCached(Board board) {
+    public boolean isAlreadyCached(Board board) {
         return cache.stream().anyMatch(b -> Arrays.deepEquals(b.getPuzzleBoard(), board.getPuzzleBoard()));
     }
 
-    static void clearCache() {
+    public void clearCache() {
         cache.clear();
     }
 }
