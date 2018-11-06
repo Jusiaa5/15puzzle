@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class PuzzleFileReader {
 
-    public int[][] readLines(String filename) throws IOException {
+    public int[][] readFile(String filename) throws IOException {
         Scanner sc = new Scanner(new BufferedReader(new FileReader(filename)));
         int[][] result = null;
         int i = 0, length = 0;
