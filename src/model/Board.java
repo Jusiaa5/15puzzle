@@ -86,68 +86,50 @@ public class Board {
         puzzleBoard[elementRow][elementColumn] = 0;
     }
 
-    // all 'move' methods return false if empty field can't be moved or if given combination already exists
-
-    public boolean moveUp(BoardCache cache) {
+    public Board moveUp(BoardCache cache) {
         //cannot move up
         if (this.getZeroRow() == 0) {
-            return false;
+            return this;
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP);
         newBoard.swapNumbers(newBoard.getZeroRow() - 1, newBoard.getZeroColumn());
-        if (cache.addBoardIfNotCached(newBoard)) {
-            this.swapNumbers(this.getZeroRow() - 1, this.getZeroColumn());
-            return true;
-        } else {
-            return false;
-        }
+        cache.addBoardIfNotCached(newBoard);
+        return newBoard;
     }
 
-    public boolean moveDown(BoardCache cache) {
+    public Board moveDown(BoardCache cache) {
         if (this.getZeroRow() == puzzleBoard.length - 1) {
-            return false;
+            return this;
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN);
         newBoard.swapNumbers(newBoard.getZeroRow() + 1, newBoard.getZeroColumn());
-        if (cache.addBoardIfNotCached(newBoard)) {
-            this.swapNumbers(this.getZeroRow() + 1, this.getZeroColumn());
-            return true;
-        } else {
-            return false;
-        }
+        cache.addBoardIfNotCached(newBoard);
+        return newBoard;
     }
 
-    public boolean moveRight(BoardCache cache) {
+    public Board moveRight(BoardCache cache) {
         if (this.getZeroColumn() == puzzleBoard.length - 1) {
-            return false;
+            return this;
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() + 1);
-        if (cache.addBoardIfNotCached(newBoard)) {
-            this.swapNumbers(this.getZeroRow(), this.getZeroColumn() + 1);
-            return true;
-        } else {
-            return false;
-        }
+        cache.addBoardIfNotCached(newBoard);
+        return newBoard;
 
     }
 
-    public boolean moveLeft(BoardCache cache) {
+    public Board moveLeft(BoardCache cache) {
         if (this.getZeroColumn() == 0) {
-            return false;
+            return this;
         }
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() - 1);
-        if (cache.addBoardIfNotCached(newBoard)) {
-            this.swapNumbers(this.getZeroRow(), this.getZeroColumn() - 1);
-            return true;
-        } else {
-            return false;
-        }
+        cache.addBoardIfNotCached(newBoard);
+        return newBoard;
     }
 
     private int[][] clone2DArray(int[][] board) {
