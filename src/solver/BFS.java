@@ -7,23 +7,22 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Queue;
 
-public class BFS {
+public class BFS extends Solver {
 
     private Board board;
     private Board targetBoard;
-    private HashSetCache cache;
     // FIFO queue
     private Queue<Board> queue;
 
     public BFS(Board board, Board targetBoard) {
+        super(new HashSetCache(board));
         this.board = board;
         this.targetBoard = targetBoard;
-        this.cache = new HashSetCache(board);
         queue = new ArrayDeque<>();
     }
 
-    // returns last board
-    private Board solve() {
+    @Override
+    Board solve() {
         queue.add(board);
         Board currentBoard;
 
@@ -34,34 +33,19 @@ public class BFS {
                 return currentBoard;
             }
 
-            if (currentBoard.moveDown(cache)) {
+            if (currentBoard.moveDown(getCache())) {
                 queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.DOWN));
             }
-            if (currentBoard.moveRight(cache)) {
+            if (currentBoard.moveRight(getCache())) {
                 queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.RIGHT));
             }
-            if (currentBoard.moveUp(cache)) {
+            if (currentBoard.moveUp(getCache())) {
                 queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.UP));
             }
-            if (currentBoard.moveLeft(cache)) {
+            if (currentBoard.moveLeft(getCache())) {
                 queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.LEFT));
             }
         }
         return null;
-    }
-
-    public void run() {
-
-        long startTime = System.currentTimeMillis();
-        Board solved = solve();
-        long time = System.currentTimeMillis() - startTime;
-
-        Runtime runtime = Runtime.getRuntime();
-        runtime.gc();
-        long memory = runtime.totalMemory() - runtime.freeMemory();
-
-        System.out.println("Time: " + time);
-        System.out.println("Memory: " + memory);
-        System.out.println("Sequence: " + cache.getSequence(solved));
     }
 }
