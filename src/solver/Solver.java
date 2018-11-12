@@ -5,14 +5,14 @@ import model.Board;
 
 public abstract class Solver {
 
+    private Board board;
+    private Board targetBoard;
     private BoardCache cache;
 
-    public Solver(BoardCache cache) {
+    Solver(Board board, Board targetBoard, BoardCache cache) {
+        this.board = board;
+        this.targetBoard = targetBoard;
         this.cache = cache;
-    }
-
-    public BoardCache getCache() {
-        return cache;
     }
 
     // Override this method in specific implementations
@@ -29,8 +29,20 @@ public abstract class Solver {
         runtime.gc();
         long memory = runtime.totalMemory() - runtime.freeMemory();
 
-        System.out.println("Time: " + time);
-        System.out.println("Memory: " + memory);
+        System.out.println("Time: " + time + " milliseconds");
+        System.out.println("Memory: " + memory + " bytes");
         System.out.println("Sequence: " + cache.getSequence(solved));
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Board getTargetBoard() {
+        return targetBoard;
+    }
+
+    public BoardCache getCache() {
+        return cache;
     }
 }

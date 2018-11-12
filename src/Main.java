@@ -1,5 +1,6 @@
 import model.Board;
 import solver.BFS;
+import solver.DFS;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,7 +12,8 @@ public class Main {
         Board targetBoard = new TargetBoardBuilder().buildTargetBoard(board);
         System.out.println(Arrays.deepToString(board.getPuzzleBoard()));
         System.out.println(Arrays.deepToString(targetBoard.getPuzzleBoard()));
-        new BFS(board, targetBoard).run();
+        new DFS(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard).run();
+        new BFS(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard).run();
     }
 
 }

@@ -9,27 +9,23 @@ import java.util.Queue;
 
 public class BFS extends Solver {
 
-    private Board board;
-    private Board targetBoard;
     // FIFO queue
     private Queue<Board> queue;
 
     public BFS(Board board, Board targetBoard) {
-        super(new HashSetCache(board));
-        this.board = board;
-        this.targetBoard = targetBoard;
+        super(board, targetBoard, new HashSetCache(board));
         queue = new ArrayDeque<>();
     }
 
     @Override
     Board solve() {
-        queue.add(board);
+        queue.add(getBoard());
         Board currentBoard;
 
         while (!queue.isEmpty()) {
             currentBoard = queue.poll();
 
-            if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), targetBoard.getPuzzleBoard())) {
+            if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
                 return currentBoard;
             }
 
