@@ -8,10 +8,19 @@ import java.util.Random;
 
 public class Board {
 
-    private int[][] puzzleBoard;
+    public static final char UP = 'U';
+    public static final char DOWN = 'D';
+    public static final char RIGHT = 'R';
+    public static final char LEFT = 'L';
+    public static final char INITIAL_BOARD = '0';
+    public static final char TARGET_BOARD = '1';
 
-    public Board(int[][] puzzleBoard) {
+    private int[][] puzzleBoard;
+    private char parentMove;
+
+    public Board(int[][] puzzleBoard, char parentMove) {
         this.puzzleBoard = puzzleBoard;
+        this.parentMove = parentMove;
     }
 
     //populate board with random numbers for a given range; for development purposes
@@ -85,7 +94,7 @@ public class Board {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy());
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP);
         newBoard.swapNumbers(newBoard.getZeroRow() - 1, newBoard.getZeroColumn());
         if (cache.addBoardIfNotCached(newBoard)) {
             this.swapNumbers(this.getZeroRow() - 1, this.getZeroColumn());
@@ -100,7 +109,7 @@ public class Board {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy());
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN);
         newBoard.swapNumbers(newBoard.getZeroRow() + 1, newBoard.getZeroColumn());
         if (cache.addBoardIfNotCached(newBoard)) {
             this.swapNumbers(this.getZeroRow() + 1, this.getZeroColumn());
@@ -115,7 +124,7 @@ public class Board {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy());
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() + 1);
         if (cache.addBoardIfNotCached(newBoard)) {
             this.swapNumbers(this.getZeroRow(), this.getZeroColumn() + 1);
@@ -131,7 +140,7 @@ public class Board {
             return false;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy());
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() - 1);
         if (cache.addBoardIfNotCached(newBoard)) {
             this.swapNumbers(this.getZeroRow(), this.getZeroColumn() - 1);
@@ -147,5 +156,13 @@ public class Board {
             newArray[i] = board[i].clone();
         }
         return newArray;
+    }
+
+    public char getParentMove() {
+        return parentMove;
+    }
+
+    public void setParentMove(char parentMove) {
+        this.parentMove = parentMove;
     }
 }
