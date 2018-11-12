@@ -14,7 +14,7 @@ public class TargetBoardBuilder {
             }
         }
         target[i - 1][j - 1] = 0;
-        return new Board(target);
+        return new Board(target, Board.TARGET_BOARD);
     }
 
 }

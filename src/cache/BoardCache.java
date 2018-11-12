@@ -9,4 +9,6 @@ public interface BoardCache {
     boolean isAlreadyCached(Board board);
 
     void clearCache();
+
+    String getSequence(Board lastBoard);
 }

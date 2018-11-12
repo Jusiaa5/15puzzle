@@ -3,15 +3,45 @@ package solver;
 import cache.HashSetCache;
 import model.Board;
 
-public class BFS {
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
 
-    private HashSetCache cache;
+public class BFS extends Solver {
 
-    public BFS() {
-        this.cache = new HashSetCache();
+    // FIFO queue
+    private Queue<Board> queue;
+
+    public BFS(Board board, Board targetBoard) {
+        super(board, targetBoard, new HashSetCache(board));
+        queue = new ArrayDeque<>();
     }
 
-    public void run(Board board) {
+    @Override
+    Board solve() {
+        queue.add(getBoard());
+        Board currentBoard;
 
+        while (!queue.isEmpty()) {
+            currentBoard = queue.poll();
+
+            if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
+                return currentBoard;
+            }
+
+            if (currentBoard.moveDown(getCache())) {
+                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.DOWN));
+            }
+            if (currentBoard.moveRight(getCache())) {
+                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.RIGHT));
+            }
+            if (currentBoard.moveUp(getCache())) {
+                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.UP));
+            }
+            if (currentBoard.moveLeft(getCache())) {
+                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.LEFT));
+            }
+        }
+        return null;
     }
 }
