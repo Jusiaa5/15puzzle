@@ -9,11 +9,12 @@ public class Heuristics {
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
 
-                if (puzzleBoard[i][j] != (size * i + j)) {
+                if (puzzleBoard[i][j] != (size * i + j) + 1) {
                     counter += 1;
                 }
             }
         }
+        System.out.println("Wrong placed: " + counter);
         return counter;
     }
 
@@ -33,6 +34,7 @@ public class Heuristics {
                 }
             }
         }
+        System.out.println("Distance: " + length);
         return length;
     }
 }
