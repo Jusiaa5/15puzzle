@@ -1,28 +1,15 @@
 package solver;
 
-import model.Board;
-
 public class Heuristics {
 
-    private int size;
-    private int[][] puzzleBoard;
-
-    public Heuristics(Board board) {
-        this.puzzleBoard = board.getPuzzleBoard();
-        this.size = puzzleBoard.length;
-    }
-
-    public void setPuzzleBoard(int[][] puzzleBoard) {
-        this.puzzleBoard = puzzleBoard;
-    }
-
-    public int wrongPlaced() {
+    public int wrongPlaced(int[][] puzzleBoard) {
         int counter = 0;
+        int size = puzzleBoard.length;
 
-        for (int i = 0; i < this.size; i++){
-            for (int j = 0; j < this.size; j++){
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
 
-                if (puzzleBoard[i][j] != (this.size * i + j)) {
+                if (puzzleBoard[i][j] != (size * i + j)) {
                     counter += 1;
                 }
             }
@@ -30,17 +17,18 @@ public class Heuristics {
         return counter;
     }
 
-    public int manhattan() {
+    public int manhattan(int[][] puzzleBoard) {
         int length = 0;
+        int size = puzzleBoard.length;
 
-        for (int i = 0; i < this.size; i++){
-            for (int j = 0; j < this.size; j++){
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
 
-                int value = this.puzzleBoard[i][j];
+                int value = puzzleBoard[i][j];
 
                 if (value != 0) {
-                    int width = Math.abs(i - (value - 1) / this.size);
-                    int height = Math.abs(j - (value - 1) % this.size);
+                    int width = Math.abs(i - (value - 1) / size);
+                    int height = Math.abs(j - (value - 1) % size);
                     length += width + height;
                 }
             }
