@@ -3,6 +3,7 @@ package model;
 import cache.BoardCache;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +18,8 @@ public class Board {
 
     private int[][] puzzleBoard;
     private char parentMove;
+    private int promisingValue;
+
 
     public Board(int[][] puzzleBoard, char parentMove) {
         this.puzzleBoard = puzzleBoard;
@@ -146,5 +149,14 @@ public class Board {
 
     public void setParentMove(char parentMove) {
         this.parentMove = parentMove;
+    }
+    
+    public int getPromisingValue() {
+        return promisingValue;
+    }
+
+    public void setPromisingValue(int promisingValue) {
+        System.out.println(promisingValue);
+        this.promisingValue = promisingValue;
     }
 }
