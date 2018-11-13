@@ -60,19 +60,15 @@ public class HashSetCache implements BoardCache {
         char parentMove = board.getParentMove();
         switch (parentMove) {
             case Board.DOWN:
-                board.moveUp(tempCache);
-                return new Board(board.getPuzzleBoardCopy(), Board.UP);
+                return board.moveUp(tempCache);
             case Board.UP:
-                board.moveDown(tempCache);
-                return new Board(board.getPuzzleBoardCopy(), Board.DOWN);
+                return board.moveDown(tempCache);
             case Board.RIGHT:
-                board.moveLeft(tempCache);
-                return new Board(board.getPuzzleBoardCopy(), Board.LEFT);
+                return board.moveLeft(tempCache);
             case Board.LEFT:
-                board.moveRight(tempCache);
-                return new Board(board.getPuzzleBoardCopy(), Board.RIGHT);
+                return board.moveRight(tempCache);
             default:
-                return new Board(board.getPuzzleBoardCopy(), Board.INITIAL_BOARD);
+                return board;
         }
     }
 

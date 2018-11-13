@@ -21,6 +21,7 @@ public class BFS extends Solver {
     Board solve() {
         queue.add(getBoard());
         Board currentBoard;
+        Board temp;
 
         while (!queue.isEmpty()) {
             currentBoard = queue.poll();
@@ -29,18 +30,26 @@ public class BFS extends Solver {
                 return currentBoard;
             }
 
-            if (currentBoard.moveDown(getCache())) {
-                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.DOWN));
+            temp = currentBoard.moveDown(getCache());
+            if (temp != currentBoard) {
+                queue.add(temp);
             }
-            if (currentBoard.moveRight(getCache())) {
-                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.RIGHT));
+
+            temp = currentBoard.moveRight(getCache());
+            if (temp != currentBoard) {
+                queue.add(temp);
             }
-            if (currentBoard.moveUp(getCache())) {
-                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.UP));
+
+            temp = currentBoard.moveUp(getCache());
+            if (temp != currentBoard) {
+                queue.add(temp);
             }
-            if (currentBoard.moveLeft(getCache())) {
-                queue.add(new Board(currentBoard.getPuzzleBoardCopy(), Board.LEFT));
+
+            temp = currentBoard.moveLeft(getCache());
+            if (temp != currentBoard) {
+                queue.add(temp);
             }
+
         }
         return null;
     }

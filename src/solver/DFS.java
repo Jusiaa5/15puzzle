@@ -20,6 +20,7 @@ public class DFS extends Solver {
     Board solve() {
         stack.push(getBoard());
         Board currentBoard;
+        Board temp;
 
         while (!stack.isEmpty()) {
             currentBoard = stack.pop();
@@ -28,17 +29,25 @@ public class DFS extends Solver {
                 return currentBoard;
             }
 
-            if (currentBoard.moveUp(getCache())) {
-                stack.push(new Board(currentBoard.getPuzzleBoardCopy(), Board.UP));
+
+            temp = currentBoard.moveUp(getCache());
+            if (temp != currentBoard) {
+                stack.push(temp);
             }
-            if (currentBoard.moveLeft(getCache())) {
-                stack.push(new Board(currentBoard.getPuzzleBoardCopy(), Board.LEFT));
+
+            temp = currentBoard.moveLeft(getCache());
+            if (temp != currentBoard) {
+                stack.push(temp);
             }
-            if (currentBoard.moveRight(getCache())) {
-                stack.push(new Board(currentBoard.getPuzzleBoardCopy(), Board.RIGHT));
+
+            temp = currentBoard.moveDown(getCache());
+            if (temp != currentBoard) {
+                stack.push(temp);
             }
-            if (currentBoard.moveDown(getCache())) {
-                stack.push(new Board(currentBoard.getPuzzleBoardCopy(), Board.DOWN));
+
+            temp = currentBoard.moveRight(getCache());
+            if (temp != currentBoard) {
+                stack.push(temp);
             }
         }
         return null;
