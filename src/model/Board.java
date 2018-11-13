@@ -156,7 +156,6 @@ public class Board {
     }
 
     public void setPromisingValue(int promisingValue) {
-        System.out.println(promisingValue);
         this.promisingValue = promisingValue;
     }
 }

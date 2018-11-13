@@ -14,7 +14,6 @@ public class Heuristics {
                 }
             }
         }
-        System.out.println("Wrong placed: " + counter);
         return counter;
     }
 
@@ -34,7 +33,6 @@ public class Heuristics {
                 }
             }
         }
-        System.out.println("Distance: " + length);
         return length;
     }
 }

@@ -60,8 +60,6 @@ public class BF extends Solver {
         while (!queue.isEmpty()) {
             currentBoard = queue.poll();
 
-            System.out.println(Arrays.deepToString(currentBoard.getPuzzleBoard()));
-
             if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
                 return currentBoard;
             }
