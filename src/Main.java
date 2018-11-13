@@ -1,4 +1,5 @@
 import model.Board;
+import solver.BF;
 import solver.BFS;
 import solver.DFS;
 
@@ -14,6 +15,7 @@ public class Main {
         System.out.println(Arrays.deepToString(targetBoard.getPuzzleBoard()));
         new DFS(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard).run();
         new BFS(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard).run();
+        new BF(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard, 1).run();
     }
 
 }
