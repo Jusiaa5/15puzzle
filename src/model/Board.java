@@ -19,11 +19,18 @@ public class Board {
     private int[][] puzzleBoard;
     private char parentMove;
     private int promisingValue;
-
+    private int idfsLevel;
 
     public Board(int[][] puzzleBoard, char parentMove) {
         this.puzzleBoard = puzzleBoard;
         this.parentMove = parentMove;
+        this.idfsLevel = 0;
+    }
+
+    public Board(int[][] puzzleBoard, char parentMove,int idfsLevel) {
+        this.puzzleBoard = puzzleBoard;
+        this.parentMove = parentMove;
+        this.idfsLevel = idfsLevel;
     }
 
     //populate board with random numbers for a given range; for development purposes
@@ -95,7 +102,7 @@ public class Board {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP);
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow() - 1, newBoard.getZeroColumn());
         cache.addBoardIfNotCached(newBoard);
         return newBoard;
@@ -106,7 +113,7 @@ public class Board {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN);
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow() + 1, newBoard.getZeroColumn());
         cache.addBoardIfNotCached(newBoard);
         return newBoard;
@@ -117,7 +124,7 @@ public class Board {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT);
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() + 1);
         cache.addBoardIfNotCached(newBoard);
         return newBoard;
@@ -129,7 +136,7 @@ public class Board {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT);
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() - 1);
         cache.addBoardIfNotCached(newBoard);
         return newBoard;
@@ -157,5 +164,13 @@ public class Board {
 
     public void setPromisingValue(int promisingValue) {
         this.promisingValue = promisingValue;
+    }
+
+    public int getIdfsLevel() {
+        return this.idfsLevel;
+    }
+
+    public void setIdfsLevel(int idfsLevel) {
+        this.idfsLevel = idfsLevel;
     }
 }
