@@ -16,7 +16,7 @@ public class AStar extends Solver {
     private Heuristics heuristics;
     private Method heuristic;
     private int promising;
-    public static final int MAX_DEPTH = 100;
+    public static final int MAX_DEPTH = 3;
 
     public AStar(Board board, Board targetBoard, int heuristicID) {
 
@@ -58,43 +58,48 @@ public class AStar extends Solver {
         Board currentBoard;
         Board temp;
 
-        while (!queue.isEmpty()) {
-            for(int i = 0; i < MAX_DEPTH; i++) {
-                currentBoard = queue.poll();
+        try {
+            while (!queue.isEmpty()) {
+                for(int i = 0; i < MAX_DEPTH; i++) {
+                    currentBoard = queue.poll();
 
-                if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
-                    return currentBoard;
-                }
+                    if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
+                        return currentBoard;
+                    }
 
-                if (currentBoard.getIdfsLevel() > i) {
-                    continue;
-                }
+                    if (currentBoard.getIdfsLevel() > i) {
+                        continue;
+                    }
 
-                temp = currentBoard.moveDown(getCache());
-                if (temp != currentBoard) {
-                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                    queue.add(temp);
-                }
+                    temp = currentBoard.moveDown(getCache());
+                    if (temp != currentBoard) {
+                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
+                        queue.add(temp);
+                    }
 
-                temp = currentBoard.moveRight(getCache());
-                if (temp != currentBoard) {
-                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                    queue.add(temp);
-                }
+                    temp = currentBoard.moveRight(getCache());
+                    if (temp != currentBoard) {
+                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
+                        queue.add(temp);
+                    }
 
-                temp = currentBoard.moveUp(getCache());
-                if (temp != currentBoard) {
-                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                    queue.add(temp);
-                }
+                    temp = currentBoard.moveUp(getCache());
+                    if (temp != currentBoard) {
+                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
+                        queue.add(temp);
+                    }
 
-                temp = currentBoard.moveLeft(getCache());
-                if (temp != currentBoard) {
-                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                    queue.add(temp);
+                    temp = currentBoard.moveLeft(getCache());
+                    if (temp != currentBoard) {
+                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
+                        queue.add(temp);
+                    }
                 }
             }
+        }  catch (NullPointerException e) {
+            System.err.println("The structure is empty - the path is too short to find the answer.");
         }
+
         return null;
     }
 }
