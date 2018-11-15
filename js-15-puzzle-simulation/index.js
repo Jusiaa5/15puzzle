@@ -100,7 +100,7 @@ function createTable(tableData) {
 
 function getPuzzleFromUser() {
     var puzzle = document.getElementById('puzzle').value;
-    puzzle = puzzle.slice(1, -1);
+    puzzle = puzzle.replace(/[\[\]']+/g,'');
     return puzzle.split(", ")
 }
 
