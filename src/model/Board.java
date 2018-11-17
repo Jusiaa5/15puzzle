@@ -13,6 +13,8 @@ public class Board {
     public static final char DOWN = 'D';
     public static final char RIGHT = 'R';
     public static final char LEFT = 'L';
+    // unintuitive but we move the tile around the blanks, not the blank
+
     public static final char INITIAL_BOARD = '0';
     public static final char TARGET_BOARD = '1';
 
