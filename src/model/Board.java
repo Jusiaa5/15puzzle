@@ -9,10 +9,10 @@ import java.util.Random;
 
 public class Board {
 
-    public static final char UP = 'D';
-    public static final char DOWN = 'U';
-    public static final char RIGHT = 'L';
-    public static final char LEFT = 'R';
+    public static final char UP = 'U';
+    public static final char DOWN = 'D';
+    public static final char RIGHT = 'R';
+    public static final char LEFT = 'L';
     // unintuitive but we move the tile around the blanks, not the blank
 
     public static final char INITIAL_BOARD = '0';
