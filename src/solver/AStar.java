@@ -16,7 +16,7 @@ public class AStar extends Solver {
     private Heuristics heuristics;
     private Method heuristic;
     private int promising;
-    public static final int MAX_DEPTH = 3;
+    public static final int MAX_DEPTH = 10;
 
     public AStar(Board board, Board targetBoard, int heuristicID) {
 
