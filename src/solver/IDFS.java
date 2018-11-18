@@ -8,7 +8,7 @@ import java.util.Stack;
 
 public class IDFS extends Solver {
 
-    public static final int MAX_DEPTH = 100;
+    public static final byte MAX_DEPTH = 100;
     private Stack<Board> stack;
 
     public IDFS(Board board, Board targetBoard) {
@@ -23,7 +23,7 @@ public class IDFS extends Solver {
         Board temp;
 
         while(!stack.isEmpty()) {
-            for (int i = 0; i < MAX_DEPTH; i++) {
+            for (byte i = 0; i < MAX_DEPTH; i++) {
 
                 currentBoard = stack.pop();
 
