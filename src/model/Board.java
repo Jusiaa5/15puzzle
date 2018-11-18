@@ -2,6 +2,8 @@ package model;
 
 import cache.BoardCache;
 
+import java.util.Arrays;
+
 public class Board {
 
     public static final char UP = 'U';
@@ -25,6 +27,8 @@ public class Board {
         this.puzzleBoard = puzzleBoard;
         this.parentMove = parentMove;
         this.idfsLevel = 0;
+        findZero();
+        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
     public Board(byte[][] puzzleBoard, char parentMove, byte idfsLevel) {
@@ -32,6 +36,7 @@ public class Board {
         this.parentMove = parentMove;
         this.idfsLevel = idfsLevel;
         findZero();
+        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
     public void findZero() {
@@ -60,7 +65,11 @@ public class Board {
     // useful for creating new Boards - in order to copy the existing 2D array
     // usage: new Board(oldBoard.getPuzzleBoardCopy())
     public byte[][] getPuzzleBoardCopy() {
-        return clone2DArray(puzzleBoard);
+        byte[][] newArray = new byte[puzzleBoard.length][];
+        for (byte i = 0; i < puzzleBoard.length; i++) {
+            newArray[i] = puzzleBoard[i].clone();
+        }
+        return newArray;
     }
 
     private void swapNumbers(byte elementRow, byte elementColumn) {
@@ -114,14 +123,6 @@ public class Board {
         newBoard.swapNumbers(newBoard.getZeroRow(), (byte)(newBoard.getZeroColumn() - 1));
         cache.addBoardIfNotCached(newBoard);
         return newBoard;
-    }
-
-    private byte[][] clone2DArray(byte[][] board) {
-        byte[][] newArray = new byte[board.length][];
-        for (byte i = 0; i < board.length; i++) {
-            newArray[i] = board[i].clone();
-        }
-        return newArray;
     }
 
     public char getParentMove() {
