@@ -3,7 +3,6 @@ package model;
 import cache.BoardCache;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +28,7 @@ public class Board {
         this.idfsLevel = 0;
     }
 
-    public Board(int[][] puzzleBoard, char parentMove,int idfsLevel) {
+    public Board(int[][] puzzleBoard, char parentMove, int idfsLevel) {
         this.puzzleBoard = puzzleBoard;
         this.parentMove = parentMove;
         this.idfsLevel = idfsLevel;
@@ -106,8 +105,9 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow() - 1, newBoard.getZeroColumn());
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveDown(BoardCache cache) {
@@ -117,8 +117,9 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow() + 1, newBoard.getZeroColumn());
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveRight(BoardCache cache) {
@@ -128,9 +129,9 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() + 1);
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
-
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveLeft(BoardCache cache) {
@@ -140,8 +141,9 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT, this.getIdfsLevel() + 1);
         newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() - 1);
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     private int[][] clone2DArray(int[][] board) {
@@ -159,7 +161,7 @@ public class Board {
     public void setParentMove(char parentMove) {
         this.parentMove = parentMove;
     }
-    
+
     public int getPromisingValue() {
         return promisingValue;
     }
