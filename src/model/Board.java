@@ -87,8 +87,9 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP, (byte)(this.getIdfsLevel() + 1));
         newBoard.swapNumbers((byte)(newBoard.getZeroRow() - 1), newBoard.getZeroColumn());
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveDown(BoardCache cache) {
@@ -98,8 +99,9 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN, (byte)(this.getIdfsLevel() + 1));
         newBoard.swapNumbers((byte)(newBoard.getZeroRow() + 1), newBoard.getZeroColumn());
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveRight(BoardCache cache) {
@@ -109,9 +111,9 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT, (byte)(this.getIdfsLevel() + 1));
         newBoard.swapNumbers(newBoard.getZeroRow(), (byte)(newBoard.getZeroColumn() + 1));
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
-
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveLeft(BoardCache cache) {
@@ -121,14 +123,15 @@ public class Board {
 
         Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT, (byte)(this.getIdfsLevel() + 1));
         newBoard.swapNumbers(newBoard.getZeroRow(), (byte)(newBoard.getZeroColumn() - 1));
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public char getParentMove() {
         return parentMove;
     }
-    
+
     public int getPromisingValue() {
         return promisingValue;
     }
