@@ -15,7 +15,6 @@ public class BF extends Solver {
     private Queue<Board> queue;
     private Heuristics heuristics;
     private Method heuristic;
-    private int promising;
 
     public BF(Board board, Board targetBoard, int heuristicID) {
 
@@ -25,9 +24,9 @@ public class BF extends Solver {
 
         try {
             if (heuristicID == 1) {
-                this.heuristic = Heuristics.class.getMethod("manhattan", int[][].class);
+                this.heuristic = Heuristics.class.getMethod("manhattan", byte[][].class);
             } else if (heuristicID == 2) {
-                this.heuristic = Heuristics.class.getMethod("wrongPlaced", int[][].class);
+                this.heuristic = Heuristics.class.getMethod("wrongPlaced", byte[][].class);
             } else {
                 this.heuristic = null;
             }
@@ -37,7 +36,7 @@ public class BF extends Solver {
         heuristics = new Heuristics();
     }
 
-    private int calculateCost(int[][] puzzleBoard) {
+    private int calculateCost(byte[][] puzzleBoard) {
         try {
             return (int) this.heuristic.invoke(this.heuristics, (Object)puzzleBoard);
         } catch (NullPointerException e) {

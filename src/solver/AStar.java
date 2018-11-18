@@ -15,8 +15,7 @@ public class AStar extends Solver {
     private Queue<Board> queue;
     private Heuristics heuristics;
     private Method heuristic;
-    private int promising;
-    public static final int MAX_DEPTH = 10;
+    public static final byte MAX_DEPTH = 100;
 
     public AStar(Board board, Board targetBoard, int heuristicID) {
 
@@ -26,9 +25,9 @@ public class AStar extends Solver {
 
         try {
             if (heuristicID == 1) {
-                this.heuristic = Heuristics.class.getMethod("manhattan", int[][].class);
+                this.heuristic = Heuristics.class.getMethod("manhattan", byte[][].class);
             } else if (heuristicID == 2) {
-                this.heuristic = Heuristics.class.getMethod("wrongPlaced", int[][].class);
+                this.heuristic = Heuristics.class.getMethod("wrongPlaced", byte[][].class);
             } else {
                 this.heuristic = null;
             }
@@ -38,7 +37,7 @@ public class AStar extends Solver {
         heuristics = new Heuristics();
     }
 
-    private int calculateCost(int[][] puzzleBoard) {
+    private int calculateCost(byte[][] puzzleBoard) {
         try {
             return (int) this.heuristic.invoke(this.heuristics, (Object)puzzleBoard);
         } catch (NullPointerException e) {
@@ -60,7 +59,7 @@ public class AStar extends Solver {
 
         try {
             while (!queue.isEmpty()) {
-                for(int i = 0; i < MAX_DEPTH; i++) {
+                for(byte i = 0; i < MAX_DEPTH; i++) {
                     currentBoard = queue.poll();
 
                     if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
