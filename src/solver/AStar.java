@@ -10,13 +10,13 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class BF extends Solver {
+public class AStar extends Solver {
 
     private Queue<Board> queue;
     private Heuristics heuristics;
     private Method heuristic;
 
-    public BF(Board board, Board targetBoard, int heuristicID) {
+    public AStar(Board board, Board targetBoard, int heuristicID) {
 
         super(board, targetBoard, new HashSetCache(board));
         Comparator<Board> priorityComparator = Comparator.comparingInt(Board::getPromisingValue);
@@ -57,39 +57,38 @@ public class BF extends Solver {
         Board temp;
 
         while (!queue.isEmpty()) {
-            currentBoard = queue.poll();
 
-            if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
-                return currentBoard;
-            }
+                currentBoard = queue.poll();
 
-            temp = currentBoard.moveDown(getCache());
-            if (temp != currentBoard) {
-                temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                queue.add(temp);
-            }
+                if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
+                    return currentBoard;
+                }
 
-            temp = currentBoard.moveRight(getCache());
-            if (temp != currentBoard) {
-                temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                queue.add(temp);
-            }
+                temp = currentBoard.moveDown(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
 
-            temp = currentBoard.moveUp(getCache());
-            if (temp != currentBoard) {
-                temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                queue.add(temp);
-            }
+                temp = currentBoard.moveRight(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
 
-            temp = currentBoard.moveLeft(getCache());
-            if (temp != currentBoard) {
-                temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                queue.add(temp);
-            }
+                temp = currentBoard.moveUp(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
 
+                temp = currentBoard.moveLeft(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
         }
-        return null;
+
+    return null;
     }
-
-
 }

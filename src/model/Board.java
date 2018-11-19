@@ -2,10 +2,7 @@ package model;
 
 import cache.BoardCache;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 public class Board {
 
@@ -13,151 +10,128 @@ public class Board {
     public static final char DOWN = 'D';
     public static final char RIGHT = 'R';
     public static final char LEFT = 'L';
+    // unintuitive but we move the tile around the blanks, not the blank
+
     public static final char INITIAL_BOARD = '0';
     public static final char TARGET_BOARD = '1';
 
-    private int[][] puzzleBoard;
+    private byte[][] puzzleBoard;
     private char parentMove;
     private int promisingValue;
-    private int idfsLevel;
+    private byte idfsLevel;
 
-    public Board(int[][] puzzleBoard, char parentMove) {
+    private byte x0;
+    private byte y0;
+
+    public Board(byte[][] puzzleBoard, char parentMove) {
         this.puzzleBoard = puzzleBoard;
         this.parentMove = parentMove;
         this.idfsLevel = 0;
+        findZero();
+//        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
-    public Board(int[][] puzzleBoard, char parentMove,int idfsLevel) {
+    public Board(byte[][] puzzleBoard, char parentMove, byte idfsLevel) {
         this.puzzleBoard = puzzleBoard;
         this.parentMove = parentMove;
         this.idfsLevel = idfsLevel;
+        findZero();
+//        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
-    //populate board with random numbers for a given range; for development purposes
-    public void fillBoardWithRandomNumbers() {
-        Random random = new Random();
-        List<Integer> numbersList = new ArrayList<>();
-        int size = (int) Math.pow(puzzleBoard.length, 2);
-        for (int i = 0; i < puzzleBoard.length; i++) {
-            for (int j = 0; j < puzzleBoard.length; j++) {
-                int randomNum = random.nextInt((size) + 1);
-                if (!numbersList.contains(randomNum)) {
-                    puzzleBoard[i][j] = randomNum;
-                    numbersList.add(randomNum);
-                }
-            }
-        }
-    }
-
-    public int getNumber(int row, int column) {
-        return puzzleBoard[row][column];
-    }
-
-    public int getZeroRow() {
-        for (int i = 0; i < puzzleBoard.length; i++) {
-            for (int j = 0; j < puzzleBoard.length; j++) {
+    public void findZero() {
+        for (byte i = 0; i < puzzleBoard.length; i++) {
+            for (byte j = 0; j < puzzleBoard.length; j++) {
                 if (puzzleBoard[i][j] == 0) {
-                    return i;
+                    this.x0 = i;
+                    this.y0 = j;
                 }
             }
         }
-        return -1;
     }
 
-    public int getZeroColumn() {
-        for (int i = 0; i < puzzleBoard.length; i++) {
-            for (int j = 0; j < puzzleBoard.length; j++) {
-                if (puzzleBoard[i][j] == 0) {
-                    return j;
-                }
-            }
-        }
-        return -1;
+    public byte getZeroRow() {
+        return this.x0;
     }
 
-    public void setNumber(int row, int column, int number) {
-        puzzleBoard[row][column] = number;
+    public byte getZeroColumn() {
+        return this.y0;
     }
 
-    public int[][] getPuzzleBoard() {
+    public byte[][] getPuzzleBoard() {
         return puzzleBoard;
     }
 
     // useful for creating new Boards - in order to copy the existing 2D array
     // usage: new Board(oldBoard.getPuzzleBoardCopy())
-    public int[][] getPuzzleBoardCopy() {
-        return clone2DArray(puzzleBoard);
+    public byte[][] getPuzzleBoardCopy() {
+        byte[][] newArray = new byte[puzzleBoard.length][];
+        for (byte i = 0; i < puzzleBoard.length; i++) {
+            newArray[i] = puzzleBoard[i].clone();
+        }
+        return newArray;
     }
 
-    private void swapNumbers(int elementRow, int elementColumn) {
-        int zeroRow = getZeroRow();
-        int zeroColumn = getZeroColumn();
-        puzzleBoard[zeroRow][zeroColumn] = puzzleBoard[elementRow][elementColumn];
+    private void swapNumbers(byte elementRow, byte elementColumn) {
+        puzzleBoard[this.x0][this.y0] = puzzleBoard[elementRow][elementColumn];
         puzzleBoard[elementRow][elementColumn] = 0;
+        this.x0 = elementRow;
+        this.y0 = elementColumn;
     }
 
     public Board moveUp(BoardCache cache) {
         //cannot move up
-        if (this.getZeroRow() == 0) {
+        if (this.x0 == 0) {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP, this.getIdfsLevel() + 1);
-        newBoard.swapNumbers(newBoard.getZeroRow() - 1, newBoard.getZeroColumn());
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.UP, (byte)(this.getIdfsLevel() + 1));
+        newBoard.swapNumbers((byte)(newBoard.getZeroRow() - 1), newBoard.getZeroColumn());
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveDown(BoardCache cache) {
-        if (this.getZeroRow() == puzzleBoard.length - 1) {
+        if (this.x0 == puzzleBoard.length - 1) {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN, this.getIdfsLevel() + 1);
-        newBoard.swapNumbers(newBoard.getZeroRow() + 1, newBoard.getZeroColumn());
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.DOWN, (byte)(this.getIdfsLevel() + 1));
+        newBoard.swapNumbers((byte)(newBoard.getZeroRow() + 1), newBoard.getZeroColumn());
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveRight(BoardCache cache) {
-        if (this.getZeroColumn() == puzzleBoard.length - 1) {
+        if (this.y0 == puzzleBoard.length - 1) {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT, this.getIdfsLevel() + 1);
-        newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() + 1);
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
-
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.RIGHT, (byte)(this.getIdfsLevel() + 1));
+        newBoard.swapNumbers(newBoard.getZeroRow(), (byte)(newBoard.getZeroColumn() + 1));
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public Board moveLeft(BoardCache cache) {
-        if (this.getZeroColumn() == 0) {
+        if (this.y0 == 0) {
             return this;
         }
 
-        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT, this.getIdfsLevel() + 1);
-        newBoard.swapNumbers(newBoard.getZeroRow(), newBoard.getZeroColumn() - 1);
-        cache.addBoardIfNotCached(newBoard);
-        return newBoard;
-    }
-
-    private int[][] clone2DArray(int[][] board) {
-        int[][] newArray = new int[board.length][];
-        for (int i = 0; i < board.length; i++) {
-            newArray[i] = board[i].clone();
-        }
-        return newArray;
+        Board newBoard = new Board(this.getPuzzleBoardCopy(), Board.LEFT, (byte)(this.getIdfsLevel() + 1));
+        newBoard.swapNumbers(newBoard.getZeroRow(), (byte)(newBoard.getZeroColumn() - 1));
+        if (cache.addBoardIfNotCached(newBoard))
+            return newBoard;
+        else return this;
     }
 
     public char getParentMove() {
         return parentMove;
     }
 
-    public void setParentMove(char parentMove) {
-        this.parentMove = parentMove;
-    }
-    
     public int getPromisingValue() {
         return promisingValue;
     }
@@ -170,7 +144,4 @@ public class Board {
         return this.idfsLevel;
     }
 
-    public void setIdfsLevel(int idfsLevel) {
-        this.idfsLevel = idfsLevel;
-    }
 }
