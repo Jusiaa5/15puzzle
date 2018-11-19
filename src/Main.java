@@ -32,5 +32,12 @@ public class Main {
 
         System.out.println("\nA* Wrong placed:\n");
         new AStar(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard, 2).run(); // wrong placed
+
+        System.out.println("\nIDA* Manhattan:\n");
+        new IDAStar(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard, 1).run(); // manhattan
+
+        System.out.println("\nIDA* Wrong placed:\n");
+        new IDAStar(new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD), targetBoard, 2).run(); // wrong placed
+
     }
 }
