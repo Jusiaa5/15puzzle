@@ -7,11 +7,6 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String args[]) throws IOException {
-        Board board = new Board(new PuzzleFileReader().readFile("puzzle.txt"), Board.INITIAL_BOARD);
-        Board targetBoard = new TargetBoardBuilder().buildTargetBoard(board);
-        System.out.println(Arrays.deepToString(board.getPuzzleBoard()));
-        System.out.println(Arrays.deepToString(targetBoard.getPuzzleBoard()));
-
         int size = 3;
         String filename;
         if (size == 3) {
@@ -19,6 +14,11 @@ public class Main {
         } else {
             filename = "puzzle4.txt";
         }
+
+        Board board = new Board(new PuzzleFileReader().readFile(filename), Board.INITIAL_BOARD);
+        Board targetBoard = new TargetBoardBuilder().buildTargetBoard(board);
+        System.out.println(Arrays.deepToString(board.getPuzzleBoard()));
+        System.out.println(Arrays.deepToString(targetBoard.getPuzzleBoard()));
 
         System.out.println("\nDFS:\n");
         new DFS(new Board(new PuzzleFileReader().readFile(filename), Board.INITIAL_BOARD), targetBoard).run();
