@@ -15,7 +15,6 @@ public class AStar extends Solver {
     private Queue<Board> queue;
     private Heuristics heuristics;
     private Method heuristic;
-    public static final byte MAX_DEPTH = 100;
 
     public AStar(Board board, Board targetBoard, int heuristicID) {
 
@@ -57,48 +56,39 @@ public class AStar extends Solver {
         Board currentBoard;
         Board temp;
 
-        try {
-            while (!queue.isEmpty()) {
-                for(byte i = 0; i < MAX_DEPTH; i++) {
-                    currentBoard = queue.poll();
+        while (!queue.isEmpty()) {
 
-                    if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
-                        return currentBoard;
-                    }
+                currentBoard = queue.poll();
 
-                    if (currentBoard.getIdfsLevel() > i) {
-                        continue;
-                    }
-
-                    temp = currentBoard.moveDown(getCache());
-                    if (temp != currentBoard) {
-                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                        queue.add(temp);
-                    }
-
-                    temp = currentBoard.moveRight(getCache());
-                    if (temp != currentBoard) {
-                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                        queue.add(temp);
-                    }
-
-                    temp = currentBoard.moveUp(getCache());
-                    if (temp != currentBoard) {
-                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                        queue.add(temp);
-                    }
-
-                    temp = currentBoard.moveLeft(getCache());
-                    if (temp != currentBoard) {
-                        temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()));
-                        queue.add(temp);
-                    }
+                if (Arrays.deepEquals(currentBoard.getPuzzleBoard(), getTargetBoard().getPuzzleBoard())) {
+                    return currentBoard;
                 }
-            }
-        }  catch (NullPointerException e) {
-            System.err.println("The structure is empty - the path is too short to find the answer.");
+
+                temp = currentBoard.moveDown(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
+
+                temp = currentBoard.moveRight(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
+
+                temp = currentBoard.moveUp(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
+
+                temp = currentBoard.moveLeft(getCache());
+                if (temp != currentBoard) {
+                    temp.setPromisingValue(calculateCost(temp.getPuzzleBoard()) + temp.getIdfsLevel());
+                    queue.add(temp);
+                }
         }
 
-        return null;
+    return null;
     }
 }

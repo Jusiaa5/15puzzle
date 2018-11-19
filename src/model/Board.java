@@ -28,7 +28,7 @@ public class Board {
         this.parentMove = parentMove;
         this.idfsLevel = 0;
         findZero();
-        System.out.println(Arrays.deepToString(this.puzzleBoard));
+//        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
     public Board(byte[][] puzzleBoard, char parentMove, byte idfsLevel) {
@@ -36,7 +36,7 @@ public class Board {
         this.parentMove = parentMove;
         this.idfsLevel = idfsLevel;
         findZero();
-        System.out.println(Arrays.deepToString(this.puzzleBoard));
+//        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
     public void findZero() {
