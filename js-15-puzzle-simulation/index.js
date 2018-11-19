@@ -54,10 +54,10 @@ class Board {
     }
 
     moveBlank(step) {
-        var U = this._length;
-        var D = -this._length;
-        var L = 1;
-        var R = -1;
+        var U = -this._length;
+        var D = this._length;
+        var L = -1;
+        var R = 1;
 
         function blank(element) {
             return element == 0;
