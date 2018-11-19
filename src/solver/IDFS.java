@@ -9,7 +9,7 @@ import java.util.Stack;
 
 public class IDFS extends Solver {
 
-    public static final byte MAX_DEPTH = 2;
+    public static final byte MAX_DEPTH = 13;
     private Stack<Board> stack;
 
     public IDFS(Board board, Board targetBoard) {

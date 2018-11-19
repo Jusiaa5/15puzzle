@@ -15,7 +15,7 @@ public class IDAStar extends Solver {
     private Queue<Board> queue;
     private Heuristics heuristics;
     private Method heuristic;
-    public static final byte MAX_DEPTH = 100;
+    public static final byte MAX_DEPTH = 17;
 
     public IDAStar(Board board, Board targetBoard, int heuristicID) {
 
