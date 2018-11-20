@@ -62,6 +62,10 @@ public class Board {
         return puzzleBoard;
     }
 
+    public String getPuzzleBoardAsString() {
+        return Arrays.deepToString(puzzleBoard);
+    }
+
     // useful for creating new Boards - in order to copy the existing 2D array
     // usage: new Board(oldBoard.getPuzzleBoardCopy())
     public byte[][] getPuzzleBoardCopy() {
@@ -142,6 +146,21 @@ public class Board {
 
     public int getIdfsLevel() {
         return this.idfsLevel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+        return Arrays.deepEquals(puzzleBoard, board.puzzleBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.deepHashCode(puzzleBoard);
+        return result;
     }
 
 }

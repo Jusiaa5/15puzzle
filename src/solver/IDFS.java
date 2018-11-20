@@ -1,6 +1,6 @@
 package solver;
 
-import cache.HashSetCache;
+import cache.HashMapCache;
 import model.Board;
 
 import java.util.Arrays;
@@ -9,11 +9,11 @@ import java.util.Stack;
 
 public class IDFS extends Solver {
 
-    public static final byte MAX_DEPTH = 13;
+    public static final int MAX_DEPTH = 13;
     private Stack<Board> stack;
 
     public IDFS(Board board, Board targetBoard) {
-        super(board, targetBoard, new HashSetCache(board));
+        super(board, targetBoard, new HashMapCache(board));
         stack = new Stack<>();
     }
 

@@ -4,30 +4,31 @@ import model.Board;
 
 import java.util.*;
 
-public class HashSetCache implements BoardCache {
+public class HashMapCache implements BoardCache {
 
-    private final HashSet<Board> cache;
+    private final Map<String, Board> cache;
 
-    public HashSetCache() {
-        this.cache = new HashSet<>();
+    public HashMapCache() {
+        this.cache = new HashMap<>();
     }
 
-    public HashSetCache(Board initialBoard) {
-        this.cache = new HashSet<>();
-        cache.add(new Board(initialBoard.getPuzzleBoardCopy(), Board.INITIAL_BOARD));
+    public HashMapCache(Board initialBoard) {
+        this.cache = new HashMap<>();
+        Board initial = new Board(initialBoard.getPuzzleBoardCopy(), Board.INITIAL_BOARD);
+        cache.put(initial.getPuzzleBoardAsString(), initial);
     }
 
     public boolean addBoardIfNotCached(Board board) {
         if (isAlreadyCached(board)) {
             return false;
         } else {
-            cache.add(board);
+            cache.put(board.getPuzzleBoardAsString(), board);
             return true;
         }
     }
 
     public boolean isAlreadyCached(Board board) {
-        return cache.stream().anyMatch(b -> Arrays.deepEquals(b.getPuzzleBoard(), board.getPuzzleBoard()));
+        return cache.containsKey(board.getPuzzleBoardAsString());
     }
 
     // if returns empty string = something went wrong
@@ -35,21 +36,20 @@ public class HashSetCache implements BoardCache {
         if (lastBoard == null) {
             return "";
         }
+        Board consideredBoard;
         StringBuilder result = new StringBuilder();
-        HashSetCache tempCache = new HashSetCache();
-        while (lastBoard.getParentMove() != Board.INITIAL_BOARD) {
-            final Board board = lastBoard;
-            Optional<Board> cacheBoard =
-                    cache.stream()
-                            .filter(b -> Arrays.deepEquals(b.getPuzzleBoard(), board.getPuzzleBoard()))
-                            .findAny();
-            if (!cacheBoard.isPresent()) {
+        HashMapCache tempCache = new HashMapCache();
+        consideredBoard = lastBoard;
+
+        while (consideredBoard.getParentMove() != Board.INITIAL_BOARD) {
+            if (!cache.containsKey(consideredBoard.getPuzzleBoardAsString())) {
                 return "";
             } else {
-                Board b = cacheBoard.get();
+
+                Board b = cache.get(consideredBoard.getPuzzleBoardAsString());
                 result.insert(0, b.getParentMove());
-                cache.remove(b);
-                lastBoard = getParentBoard(b, tempCache);
+                cache.remove(b.getPuzzleBoardAsString());
+                consideredBoard = getParentBoard(b, tempCache);
             }
         }
         // removing '0' at the beginning

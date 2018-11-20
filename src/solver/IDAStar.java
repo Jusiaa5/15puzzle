@@ -1,6 +1,6 @@
 package solver;
 
-import cache.HashSetCache;
+import cache.HashMapCache;
 import model.Board;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,11 +15,11 @@ public class IDAStar extends Solver {
     private Queue<Board> queue;
     private Heuristics heuristics;
     private Method heuristic;
-    public static final byte MAX_DEPTH = 17;
+    public static final int MAX_DEPTH = 17;
 
     public IDAStar(Board board, Board targetBoard, int heuristicID) {
 
-        super(board, targetBoard, new HashSetCache(board));
+        super(board, targetBoard, new HashMapCache(board));
         Comparator<Board> priorityComparator = Comparator.comparingInt(Board::getPromisingValue);
         queue = new PriorityQueue<>(priorityComparator);
 

@@ -1,6 +1,6 @@
 package solver;
 
-import cache.HashSetCache;
+import cache.HashMapCache;
 import model.Board;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,7 +18,7 @@ public class BF extends Solver {
 
     public BF(Board board, Board targetBoard, int heuristicID) {
 
-        super(board, targetBoard, new HashSetCache(board));
+        super(board, targetBoard, new HashMapCache(board));
         Comparator<Board> priorityComparator = Comparator.comparingInt(Board::getPromisingValue);
         queue = new PriorityQueue<>(priorityComparator);
 

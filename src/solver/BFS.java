@@ -1,6 +1,6 @@
 package solver;
 
-import cache.HashSetCache;
+import cache.HashMapCache;
 import model.Board;
 
 import java.util.ArrayDeque;
@@ -13,7 +13,7 @@ public class BFS extends Solver {
     private Queue<Board> queue;
 
     public BFS(Board board, Board targetBoard) {
-        super(board, targetBoard, new HashSetCache(board));
+        super(board, targetBoard, new HashMapCache(board));
         queue = new ArrayDeque<>();
     }
 

@@ -1,6 +1,6 @@
 package solver;
 
-import cache.HashSetCache;
+import cache.HashMapCache;
 import model.Board;
 
 import java.util.Arrays;
@@ -12,7 +12,7 @@ public class DFS extends Solver {
     private Stack<Board> stack;
 
     public DFS(Board board, Board targetBoard) {
-        super(board, targetBoard, new HashSetCache(board));
+        super(board, targetBoard, new HashMapCache(board));
         stack = new Stack<>();
     }
 
@@ -29,8 +29,7 @@ public class DFS extends Solver {
                 return currentBoard;
             }
 
-
-            temp = currentBoard.moveUp(getCache());
+            temp = currentBoard.moveDown(getCache());
             if (temp != currentBoard) {
                 stack.push(temp);
             }
@@ -40,7 +39,7 @@ public class DFS extends Solver {
                 stack.push(temp);
             }
 
-            temp = currentBoard.moveDown(getCache());
+            temp = currentBoard.moveUp(getCache());
             if (temp != currentBoard) {
                 stack.push(temp);
             }
