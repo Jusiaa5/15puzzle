@@ -39,12 +39,12 @@ public class DFS extends Solver {
                 stack.push(temp);
             }
 
-            temp = currentBoard.moveUp(getCache());
+            temp = currentBoard.moveRight(getCache());
             if (temp != currentBoard) {
                 stack.push(temp);
             }
 
-            temp = currentBoard.moveRight(getCache());
+            temp = currentBoard.moveUp(getCache());
             if (temp != currentBoard) {
                 stack.push(temp);
             }

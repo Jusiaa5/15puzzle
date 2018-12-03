@@ -10,7 +10,6 @@ public class Board {
     public static final char DOWN = 'D';
     public static final char RIGHT = 'R';
     public static final char LEFT = 'L';
-    // unintuitive but we move the tile around the blanks, not the blank
 
     public static final char INITIAL_BOARD = '0';
     public static final char TARGET_BOARD = '1';
@@ -28,7 +27,6 @@ public class Board {
         this.parentMove = parentMove;
         this.idfsLevel = 0;
         findZero();
-//        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
     public Board(byte[][] puzzleBoard, char parentMove, byte idfsLevel) {
@@ -36,7 +34,6 @@ public class Board {
         this.parentMove = parentMove;
         this.idfsLevel = idfsLevel;
         findZero();
-//        System.out.println(Arrays.deepToString(this.puzzleBoard));
     }
 
     public void findZero() {
@@ -60,10 +57,6 @@ public class Board {
 
     public byte[][] getPuzzleBoard() {
         return puzzleBoard;
-    }
-
-    public String getPuzzleBoardAsString() {
-        return Arrays.deepToString(puzzleBoard);
     }
 
     // useful for creating new Boards - in order to copy the existing 2D array
@@ -161,6 +154,11 @@ public class Board {
     public int hashCode() {
         int result = Arrays.deepHashCode(puzzleBoard);
         return result;
+    }
+
+    @Override
+    public String toString() {
+            return Arrays.deepToString(puzzleBoard);
     }
 
 }

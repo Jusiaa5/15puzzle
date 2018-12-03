@@ -15,20 +15,20 @@ public class HashMapCache implements BoardCache {
     public HashMapCache(Board initialBoard) {
         this.cache = new HashMap<>();
         Board initial = new Board(initialBoard.getPuzzleBoardCopy(), Board.INITIAL_BOARD);
-        cache.put(initial.getPuzzleBoardAsString(), initial);
+        cache.put(initial.toString(), initial);
     }
 
     public boolean addBoardIfNotCached(Board board) {
         if (isAlreadyCached(board)) {
             return false;
         } else {
-            cache.put(board.getPuzzleBoardAsString(), board);
+            cache.put(board.toString(), board);
             return true;
         }
     }
 
     public boolean isAlreadyCached(Board board) {
-        return cache.containsKey(board.getPuzzleBoardAsString());
+        return cache.containsKey(board.toString());
     }
 
     // if returns empty string = something went wrong
@@ -42,13 +42,13 @@ public class HashMapCache implements BoardCache {
         consideredBoard = lastBoard;
 
         while (consideredBoard.getParentMove() != Board.INITIAL_BOARD) {
-            if (!cache.containsKey(consideredBoard.getPuzzleBoardAsString())) {
+            if (!cache.containsKey(consideredBoard.toString())) {
                 return "";
             } else {
 
-                Board b = cache.get(consideredBoard.getPuzzleBoardAsString());
+                Board b = cache.get(consideredBoard.toString());
                 result.insert(0, b.getParentMove());
-                cache.remove(b.getPuzzleBoardAsString());
+                cache.remove(b.toString());
                 consideredBoard = getParentBoard(b, tempCache);
             }
         }
